@@ -12,6 +12,7 @@ pub use key_usage::*;
 use der::asn1::SetOfVec;
 
 use x509_cert::attr::{Attribute, Attributes};
+use x509_cert::ext::Extensions;
 
 use crate::{Constrained, ConstraintError, Error};
 
@@ -37,11 +38,10 @@ pub const OID_KEY_USAGE_DECIPHER_ONLY: &str = "1.3.6.1.5.5.7.3.6";
 pub const OID_BASIC_CONSTRAINTS: &str = "2.5.29.19";
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
-/// Capabilities which an ID-Cert or ID-CSR might have. For ID-Certs, you'd find these capabilities
-/// in the `Extensions` field of a certificate. ID-CSRs store these capabilities as part of the
-/// `Attributes` field.
+/// [Capabilities] acts as a higher-level adapter type to easily work with [Extensions] on IdCerts
+/// and [Abilities] on IdCsrs.
 ///
-/// This struct only covers the CertCapability subtype trees of which at least one of the subtypes
+/// This struct only covers the `certCapability` subtype trees of which at least one of the subtypes
 /// are relevant to polyproto certificates.
 pub struct Capabilities {
     /// The key usage extension defines the purpose of the key contained in the certificate.
@@ -158,6 +158,22 @@ impl TryFrom<Capabilities> for Attributes {
     }
 
     type Error = ConstraintError;
+}
+
+impl TryFrom<Capabilities> for Extensions {
+    type Error = Error;
+
+    fn try_from(value: Capabilities) -> Result<Self, Self::Error> {
+        todo!()
+    }
+}
+
+impl TryFrom<Extensions> for Capabilities {
+    type Error = Error;
+
+    fn try_from(value: Extensions) -> Result<Self, Self::Error> {
+        todo!()
+    }
 }
 
 #[cfg(test)]
