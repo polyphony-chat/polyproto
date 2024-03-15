@@ -11,8 +11,6 @@ use x509_cert::attr::Attribute;
 
 use crate::Error;
 
-use super::Capability;
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 /// The key usage extension defines the purpose of the key contained in the certificate. The usage
 /// restriction might be employed when a key that could be used for more than one operation is to
@@ -55,25 +53,23 @@ pub enum KeyUsage {
     DecipherOnly(bool),
 }
 
-impl Capability for KeyUsage {
-    fn to_oid(self) -> ObjectIdentifier {
-        ObjectIdentifier::from(self)
-    }
-
-    fn to_any(self) -> Any {
-        Any::from(self)
-    }
-
-    fn is_critical(&self) -> bool {
-        // None of the KeyUsage values are critical in every case for polyproto
-        false
-    }
-}
-
 impl KeyUsage {
     /// Returns the bool value stored in a [KeyUsage] enum variant.
     pub fn as_bool(&self) -> bool {
         bool::from(*self)
+    }
+
+    pub fn to_oid(self) -> ObjectIdentifier {
+        ObjectIdentifier::from(self)
+    }
+
+    pub fn to_any(self) -> Any {
+        Any::from(self)
+    }
+
+    pub fn is_critical(&self) -> bool {
+        // None of the KeyUsage values are critical in every case for polyproto
+        false
     }
 }
 

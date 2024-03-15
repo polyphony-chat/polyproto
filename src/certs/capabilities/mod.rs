@@ -39,15 +39,6 @@ pub const OID_KEY_USAGE_DECIPHER_ONLY: &str = "1.3.6.1.5.5.7.3.6";
 /// Object Identifier for the BasicConstraints variant.
 pub const OID_BASIC_CONSTRAINTS: &str = "2.5.29.19";
 
-pub(crate) trait Capability {
-    /// Returns the [ObjectIdentifier] associated with `self`.
-    fn to_oid(self) -> ObjectIdentifier;
-    /// Converts `self` to [Any]
-    fn to_any(self) -> Any;
-    /// Whether this capability should be treated as "critical" in the context of X.509.
-    fn is_critical(&self) -> bool;
-}
-
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 /// [Capabilities] acts as a higher-level adapter type to easily work with [Extensions] on IdCerts
 /// and [Abilities] on IdCsrs.
