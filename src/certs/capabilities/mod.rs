@@ -11,7 +11,7 @@ pub use basic_constraints::*;
 pub use key_usage::*;
 
 use der::asn1::SetOfVec;
-#[cfg(feature = "wasm")]
+#[cfg(feature = "wasm_bindgen")]
 use wasm_bindgen::prelude::*;
 use x509_cert::attr::{Attribute, Attributes};
 use x509_cert::ext::{Extension, Extensions};

@@ -3,7 +3,7 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 use spki::{AlgorithmIdentifierOwned, SignatureBitStringEncoding};
-#[cfg(feature = "wasm")]
+#[cfg(feature = "wasm_bindgen")]
 use wasm_bindgen::prelude::*;
 
 #[cfg_attr(feature = "wasm", wasm_bindgen)]

@@ -51,8 +51,11 @@ pub const OID_RDN_UNIQUE_IDENTIFIER: &str = "0.9.2342.19200300.100.1.44";
 pub const OID_RDN_UID: &str = "0.9.2342.19200300.100.1.1";
 
 use errors::base::ConstraintError;
-#[cfg(feature = "wasm")]
+#[cfg(feature = "wasm_bindgen")]
 use wasm_bindgen::prelude::*;
+#[cfg(feature = "wee_alloc")]
+#[global_allocator]
+static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[cfg(feature = "reqwest")]
 /// Ready-to-use API routes, implemented using `reqwest`

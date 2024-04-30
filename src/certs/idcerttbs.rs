@@ -5,7 +5,7 @@
 use der::asn1::Uint;
 use der::{Decode, Encode};
 use spki::AlgorithmIdentifierOwned;
-#[cfg(feature = "wasm")]
+#[cfg(feature = "wasm_bindgen")]
 use wasm_bindgen::prelude::*;
 use x509_cert::certificate::{Profile, TbsCertificateInner};
 use x509_cert::ext::Extensions;

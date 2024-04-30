@@ -5,7 +5,7 @@
 use der::asn1::Uint;
 use der::pem::LineEnding;
 use der::{Decode, DecodePem, Encode, EncodePem};
-#[cfg(feature = "wasm")]
+#[cfg(feature = "wasm_bindgen")]
 use wasm_bindgen::prelude::*;
 use x509_cert::name::Name;
 use x509_cert::time::Validity;

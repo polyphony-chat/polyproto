@@ -12,12 +12,13 @@ crate-type = ["rlib", "cdylib", "staticlib"]
 
 [features]
 default = ["routes", "reqwest"]
-wasm = ["getrandom", "getrandom/js", "wasm_bindgen"]
+wasm = ["getrandom", "getrandom/js", "wasm_bindgen", "wee_alloc"]
 wasm_bindgen = ["dep:wasm-bindgen"]
 getrandom = ["dep:getrandom"]
 routes = ["serde"]
 reqwest = ["dep:reqwest"]
 serde = ["dep:serde", "dep:serde_json"]
+wee_alloc = ["dep:wee_alloc"]
 
 [dependencies]
 der = "0.7.9"
@@ -30,6 +31,7 @@ spki = "0.7.3"
 thiserror = "1.0.59"
 x509-cert = { version = "0.2.5", default-features = false, features = ["pem"] }
 wasm-bindgen = { version = "0.2.92", optional = true }
+wee_alloc = { version = "0.4.5", optional = true }
 
 [dev-dependencies]
 ed25519-dalek = { version = "2.1.1", features = ["rand_core", "signature"] }

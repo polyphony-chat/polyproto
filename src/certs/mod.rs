@@ -6,7 +6,7 @@ use std::ops::{Deref, DerefMut};
 
 use der::asn1::{BitString, Ia5String};
 use spki::{AlgorithmIdentifierOwned, SubjectPublicKeyInfoOwned};
-#[cfg(feature = "wasm")]
+#[cfg(feature = "wasm_bindgen")]
 use wasm_bindgen::prelude::*;
 use x509_cert::name::Name;
 

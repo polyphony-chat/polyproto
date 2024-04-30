@@ -7,7 +7,7 @@ use std::marker::PhantomData;
 use der::pem::LineEnding;
 use der::{Decode, DecodePem, Encode, EncodePem};
 use spki::AlgorithmIdentifierOwned;
-#[cfg(feature = "wasm")]
+#[cfg(feature = "wasm_bindgen")]
 use wasm_bindgen::prelude::*;
 use x509_cert::attr::Attributes;
 use x509_cert::name::Name;

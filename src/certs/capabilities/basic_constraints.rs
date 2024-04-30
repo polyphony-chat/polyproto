@@ -7,7 +7,7 @@ use std::str::FromStr;
 use der::asn1::{OctetString, SequenceOf, SetOfVec};
 use der::{Any, Decode, Encode, Tag, Tagged};
 use spki::ObjectIdentifier;
-#[cfg(feature = "wasm")]
+#[cfg(feature = "wasm_bindgen")]
 use wasm_bindgen::prelude::*;
 use x509_cert::attr::Attribute;
 use x509_cert::ext::Extension;
