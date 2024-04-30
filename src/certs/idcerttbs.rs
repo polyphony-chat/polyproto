@@ -5,6 +5,8 @@
 use der::asn1::Uint;
 use der::{Decode, Encode};
 use spki::AlgorithmIdentifierOwned;
+#[cfg(feature = "wasm")]
+use wasm_bindgen::prelude::*;
 use x509_cert::certificate::{Profile, TbsCertificateInner};
 use x509_cert::ext::Extensions;
 use x509_cert::name::Name;
@@ -42,6 +44,7 @@ use super::PublicKeyInfo;
 /// `IdCertTbs` implements `TryFrom<[TbsCertificateInner]<P>>`, where `TbsCertificateInner` is
 /// [x509_cert::certificate::TbsCertificateInner]. This crate also provides an implementation for
 /// `TryFrom<IdCertTbs<T>> for TbsCertificateInner<P>`.
+#[cfg_attr(feature = "wasm", wasm_bindgen)]
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct IdCertTbs<S: Signature, P: PublicKey<S>> {
     /// The certificates' serial number, as issued by the Certificate Authority.

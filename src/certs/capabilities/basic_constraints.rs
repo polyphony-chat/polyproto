@@ -7,6 +7,8 @@ use std::str::FromStr;
 use der::asn1::{OctetString, SequenceOf, SetOfVec};
 use der::{Any, Decode, Encode, Tag, Tagged};
 use spki::ObjectIdentifier;
+#[cfg(feature = "wasm")]
+use wasm_bindgen::prelude::*;
 use x509_cert::attr::Attribute;
 use x509_cert::ext::Extension;
 
@@ -16,6 +18,7 @@ use crate::errors::composite::ConversionError;
 use super::OID_BASIC_CONSTRAINTS;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[cfg_attr(feature = "wasm", wasm_bindgen)]
 /// Basic constraints is an X.509 extension type that defines whether a given certificate is allowed
 /// to sign additional certificates and what path length restrictions may exist.
 pub struct BasicConstraints {

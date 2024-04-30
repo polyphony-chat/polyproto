@@ -9,6 +9,7 @@ use crate::signature::Signature;
 use crate::types::entities::{Challenge, CompletedChallenge};
 
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "wasm", wasm_bindgen)]
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 /// Schema for creating a new session.
 ///
@@ -23,6 +24,7 @@ pub struct CreateSessionRequest {
 }
 
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "wasm", wasm_bindgen)]
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 /// Response counterpart of [CreateSessionSchema].
 pub struct CreateSessionResponse {
@@ -41,6 +43,7 @@ impl<S: Signature, P: PublicKey<S>> TryFrom<CreateSessionResponse> for IdCert<S,
 }
 
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "wasm", wasm_bindgen)]
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 /// Schema for getting a challenge. Can be converted to [Challenge] using [TryFrom].
 ///
@@ -61,6 +64,7 @@ impl TryFrom<GetChallengeResponse> for Challenge {
 }
 
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "wasm", wasm_bindgen)]
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 /// Completed challenge payload.
 // TODO: Move this to /types/entities or another, more appropriate module.
@@ -81,6 +85,7 @@ impl<S: Signature> From<CompletedChallenge<S>> for ChallengePayload {
 }
 
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "wasm", wasm_bindgen)]
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 /// Identify payload to log a session in.
 ///
@@ -95,6 +100,7 @@ pub struct IdentifyRequest {
 }
 
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "wasm", wasm_bindgen)]
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 /// Response counterpart of [IdentifyRequest].
 pub struct IdentifyResponse {

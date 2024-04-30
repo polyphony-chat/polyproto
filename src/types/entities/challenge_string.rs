@@ -13,6 +13,7 @@ use crate::key::PrivateKey;
 use crate::signature::Signature;
 use crate::Constrained;
 
+#[cfg_attr(feature = "wasm", wasm_bindgen)]
 #[derive(Debug, Clone, PartialEq, Eq)]
 /// A challenge string, used to prove that an actor possesses a private key, without revealing it.
 pub struct Challenge {
@@ -21,6 +22,7 @@ pub struct Challenge {
 }
 
 impl Challenge {
+    #[cfg_attr(feature = "wasm", wasm_bindgen(constructor))]
     /// Creates a new challenge string.
     ///
     /// ## Arguments
@@ -34,6 +36,7 @@ impl Challenge {
         })
     }
 
+    #[cfg_attr(feature = "wasm", wasm_bindgen)]
     /// Completes the challenge by signing it with the private key.
     pub fn complete<S: Signature, V: PrivateKey<S>>(&self, key: &V) -> CompletedChallenge<S> {
         let s = key.sign(self.challenge.as_bytes());
@@ -59,6 +62,7 @@ impl DerefMut for Challenge {
 }
 
 impl Constrained for Challenge {
+    #[cfg_attr(feature = "wasm", wasm_bindgen)]
     fn validate(&self) -> Result<(), crate::errors::base::ConstraintError> {
         if self.challenge.len() < Length::new(32) {
             return Err(ConstraintError::OutOfBounds {
@@ -82,6 +86,7 @@ impl Constrained for Challenge {
     }
 }
 
+#[cfg_attr(feature = "wasm", wasm_bindgen)]
 /// A completed challenge, containing the challenge and the signature.
 pub struct CompletedChallenge<S: Signature> {
     /// The challenge.

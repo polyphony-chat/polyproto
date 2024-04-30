@@ -7,6 +7,8 @@ use std::str::FromStr;
 use der::asn1::{BitString, OctetString, SetOfVec};
 use der::{Any, Decode, Encode, Tag, Tagged};
 use spki::ObjectIdentifier;
+#[cfg(feature = "wasm")]
+use wasm_bindgen::prelude::*;
 use x509_cert::attr::Attribute;
 use x509_cert::ext::Extension;
 
@@ -15,6 +17,7 @@ use crate::errors::composite::ConversionError;
 
 use super::*;
 
+#[cfg_attr(feature = "wasm", wasm_bindgen)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 /// The key usage extension defines the purpose of the key contained in the certificate. The usage
 /// restriction might be employed when a key that could be used for more than one operation is to
@@ -57,6 +60,7 @@ pub enum KeyUsage {
     DecipherOnly,
 }
 
+#[cfg_attr(feature = "wasm", wasm_bindgen)]
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 /// The KeyUsages struct is a collection of KeyUsage variants.
 pub struct KeyUsages {
@@ -65,6 +69,7 @@ pub struct KeyUsages {
 }
 
 impl KeyUsages {
+    #[cfg_attr(feature = "wasm", wasm_bindgen(constructor))]
     /// Creates a new KeyUsages struct from a slice of KeyUsage variants.
     pub fn new(key_usages: &[KeyUsage]) -> Self {
         KeyUsages {
@@ -72,6 +77,7 @@ impl KeyUsages {
         }
     }
 
+    #[cfg_attr(feature = "wasm", wasm_bindgen)]
     /// Converts a byte slice to a KeyUsages struct, given that the byte slice is a bitstring
     /// representing the KeyUsages.
     ///
@@ -137,6 +143,7 @@ impl KeyUsages {
         Ok(KeyUsages { key_usages })
     }
 
+    #[cfg_attr(feature = "wasm", wasm_bindgen)]
     /// Converts the KeyUsages to a [BitString].
     pub fn to_bitstring(self) -> BitString {
         let mut vec = self.key_usages;

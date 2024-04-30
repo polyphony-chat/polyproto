@@ -11,7 +11,8 @@ pub use basic_constraints::*;
 pub use key_usage::*;
 
 use der::asn1::SetOfVec;
-
+#[cfg(feature = "wasm")]
+use wasm_bindgen::prelude::*;
 use x509_cert::attr::{Attribute, Attributes};
 use x509_cert::ext::{Extension, Extensions};
 
@@ -43,6 +44,7 @@ pub const OID_BASIC_CONSTRAINTS: &str = "2.5.29.19";
 pub const OID_KEY_USAGE: &str = "2.5.29.15";
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "wasm", wasm_bindgen)]
 /// An abstraction over X.509 Extensions and PKCS#10 Attributes, representing the capabilities
 /// of a certificate. Capabilities can be converted from and to both [Attributes] and [Extensions].
 ///
@@ -68,6 +70,7 @@ impl Default for Capabilities {
 }
 
 impl Capabilities {
+    #[cfg_attr(feature = "wasm", wasm_bindgen)]
     /// Sane default for actor [IdCsr]/[IdCert] [Capabilities]. Uses the DigitalSignature flag,
     /// not the ContentCommitment flag.
     pub fn default_actor() -> Self {
@@ -82,6 +85,7 @@ impl Capabilities {
         }
     }
 
+    #[cfg_attr(feature = "wasm", wasm_bindgen)]
     /// Sane default for home server [IdCsr]/[IdCert] [Capabilities].
     pub fn default_home_server() -> Self {
         let key_usage = KeyUsages::new(&[KeyUsage::KeyCertSign]);

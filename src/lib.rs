@@ -51,6 +51,8 @@ pub const OID_RDN_UNIQUE_IDENTIFIER: &str = "0.9.2342.19200300.100.1.44";
 pub const OID_RDN_UID: &str = "0.9.2342.19200300.100.1.1";
 
 use errors::base::ConstraintError;
+#[cfg(feature = "wasm")]
+use wasm_bindgen::prelude::*;
 
 #[cfg(feature = "reqwest")]
 /// Ready-to-use API routes, implemented using `reqwest`
@@ -72,6 +74,7 @@ pub(crate) mod constraints;
 pub use der;
 pub use spki;
 
+#[cfg_attr(feature = "wasm", wasm_bindgen)]
 /// Traits implementing [Constrained] can be validated to be well-formed. This does not guarantee
 /// that a validated type will always be *correct* in the context it is in.
 ///

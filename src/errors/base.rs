@@ -2,9 +2,12 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+#[cfg(feature = "wasm")]
+use wasm_bindgen::prelude::*;
 use thiserror::Error;
 
 #[derive(Error, Debug, PartialEq, Clone)]
+#[cfg_attr(feature = "wasm", wasm_bindgen)]
 pub enum ConstraintError {
     #[error("The value did not meet the set validation criteria and is considered malformed")]
     Malformed(Option<String>),
@@ -19,6 +22,7 @@ pub enum ConstraintError {
 
 /// Represents errors for invalid input in IdCsr or IdCert generation.
 #[derive(Error, Debug, PartialEq, Clone)]
+#[cfg_attr(feature = "wasm", wasm_bindgen)]
 pub enum InvalidInput {
     #[error("The value is malformed and cannot be used as input: {0}")]
     Malformed(String),

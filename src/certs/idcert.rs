@@ -5,6 +5,8 @@
 use der::asn1::Uint;
 use der::pem::LineEnding;
 use der::{Decode, DecodePem, Encode, EncodePem};
+#[cfg(feature = "wasm")]
+use wasm_bindgen::prelude::*;
 use x509_cert::name::Name;
 use x509_cert::time::Validity;
 use x509_cert::Certificate;
@@ -31,6 +33,7 @@ use super::idcsr::IdCsr;
 ///   signed with.
 /// - **P**: A [PublicKey] type P which can be used to verify [Signature]s of type S.
 #[derive(Debug, PartialEq, Eq, Clone)]
+#[cfg_attr(feature = "wasm", wasm_bindgen)]
 pub struct IdCert<S: Signature, P: PublicKey<S>> {
     /// Inner TBS (To be signed) certificate
     pub id_cert_tbs: IdCertTbs<S, P>,
@@ -39,6 +42,7 @@ pub struct IdCert<S: Signature, P: PublicKey<S>> {
 }
 
 impl<S: Signature, P: PublicKey<S>> IdCert<S, P> {
+    #[cfg_attr(feature = "wasm", wasm_bindgen)]
     /// Create a new [IdCert] by passing an [IdCsr] and other supplementary information. Returns
     /// an error, if the provided IdCsr or issuer [Name] do not pass [Constrained] verification,
     /// i.e. if they are not up to polyproto specification. Also fails if the provided IdCsr has
@@ -70,6 +74,7 @@ impl<S: Signature, P: PublicKey<S>> IdCert<S, P> {
         Ok(cert)
     }
 
+    #[cfg_attr(feature = "wasm", wasm_bindgen)]
     /// Create a new [IdCert] by passing an [IdCsr] and other supplementary information. Returns
     /// an error, if the provided IdCsr or issuer [Name] do not pass [Constrained] verification,
     /// i.e. if they are not up to polyproto specification. Also fails if the provided IdCsr has
@@ -109,6 +114,7 @@ impl<S: Signature, P: PublicKey<S>> IdCert<S, P> {
         Ok(cert)
     }
 
+    #[cfg_attr(feature = "wasm", wasm_bindgen)]
     /// Create an IdCsr from a byte slice containing a DER encoded X.509 Certificate.
     pub fn from_der(value: Vec<u8>) -> Result<Self, ConversionError> {
         let cert = IdCert::try_from(Certificate::from_der(&value)?)?;
@@ -116,11 +122,13 @@ impl<S: Signature, P: PublicKey<S>> IdCert<S, P> {
         Ok(cert)
     }
 
+    #[cfg_attr(feature = "wasm", wasm_bindgen)]
     /// Encode this type as DER, returning a byte vector.
     pub fn to_der(self) -> Result<Vec<u8>, ConversionError> {
         Ok(Certificate::try_from(self)?.to_der()?)
     }
 
+    #[cfg_attr(feature = "wasm", wasm_bindgen)]
     /// Create an IdCsr from a byte slice containing a PEM encoded X.509 Certificate.
     pub fn from_pem(pem: &str) -> Result<Self, ConversionError> {
         let cert = IdCert::try_from(Certificate::from_pem(pem)?)?;
@@ -128,6 +136,7 @@ impl<S: Signature, P: PublicKey<S>> IdCert<S, P> {
         Ok(cert)
     }
 
+    #[cfg_attr(feature = "wasm", wasm_bindgen)]
     /// Encode this type as PEM, returning a string.
     pub fn to_pem(self, line_ending: LineEnding) -> Result<String, ConversionError> {
         Ok(Certificate::try_from(self)?.to_pem(line_ending)?)

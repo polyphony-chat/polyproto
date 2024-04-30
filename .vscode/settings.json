@@ -1,4 +1,5 @@
 {
 	"markiscodecoverage.searchCriteria": ".coverage/lcov*.info",
-	"rust-analyzer.cargo.features": ["routes"]
+	"rust-analyzer.cargo.features": ["routes"],
+	"rust-analyzer.cargo.target": "wasm32-unknown-unknown"
 }

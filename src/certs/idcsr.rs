@@ -7,6 +7,8 @@ use std::marker::PhantomData;
 use der::pem::LineEnding;
 use der::{Decode, DecodePem, Encode, EncodePem};
 use spki::AlgorithmIdentifierOwned;
+#[cfg(feature = "wasm")]
+use wasm_bindgen::prelude::*;
 use x509_cert::attr::Attributes;
 use x509_cert::name::Name;
 use x509_cert::request::{CertReq, CertReqInfo};
@@ -20,6 +22,7 @@ use super::capabilities::Capabilities;
 use super::{PkcsVersion, PublicKeyInfo};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
+#[cfg_attr(feature = "wasm", wasm_bindgen)]
 /// A polyproto Certificate Signing Request, compatible with [IETF RFC 2986 "PKCS #10"](https://datatracker.ietf.org/doc/html/rfc2986).
 /// Can be exchanged for an [IdCert] by requesting one from a certificate authority in exchange
 /// for this [IdCsr].
@@ -43,6 +46,7 @@ pub struct IdCsr<S: Signature, P: PublicKey<S>> {
 }
 
 impl<S: Signature, P: PublicKey<S>> IdCsr<S, P> {
+    #[cfg_attr(feature = "wasm", wasm_bindgen(constructor))]
     /// Performs basic input validation and creates a new polyproto ID-Cert CSR, according to
     /// PKCS#10. The CSR is being signed using the subjects' supplied signing key ([PrivateKey])
     ///
@@ -79,7 +83,7 @@ impl<S: Signature, P: PublicKey<S>> IdCsr<S, P> {
     /// Validates the well-formedness of the [IdCsr] and its contents. Fails, if the [Name] or
     /// [Capabilities] do not meet polyproto validation criteria for actor CSRs, or if
     /// the signature fails to be verified.
-
+    #[cfg_attr(feature = "wasm", wasm_bindgen)]
     pub fn valid_actor_csr(&self) -> Result<(), ConversionError> {
         self.validate()?;
         if self.inner_csr.capabilities.basic_constraints.ca {
@@ -90,6 +94,7 @@ impl<S: Signature, P: PublicKey<S>> IdCsr<S, P> {
         Ok(())
     }
 
+    #[cfg_attr(feature = "wasm", wasm_bindgen)]
     /// Validates the well-formedness of the [IdCsr] and its contents. Fails, if the [Name] or
     /// [Capabilities] do not meet polyproto validation criteria for home server CSRs, or if
     /// the signature fails to be verified.
@@ -103,21 +108,25 @@ impl<S: Signature, P: PublicKey<S>> IdCsr<S, P> {
         Ok(())
     }
 
+    #[cfg_attr(feature = "wasm", wasm_bindgen)]
     /// Create an IdCsr from a byte slice containing a DER encoded PKCS #10 CSR.
     pub fn from_der(bytes: &[u8]) -> Result<Self, ConversionError> {
         IdCsr::try_from(CertReq::from_der(bytes)?)
     }
 
+    #[cfg_attr(feature = "wasm", wasm_bindgen)]
     /// Encode this type as DER, returning a byte vector.
     pub fn to_der(self) -> Result<Vec<u8>, ConversionError> {
         Ok(CertReq::try_from(self)?.to_der()?)
     }
 
+    #[cfg_attr(feature = "wasm", wasm_bindgen)]
     /// Create an IdCsr from a string containing a PEM encoded PKCS #10 CSR.
     pub fn from_pem(pem: &str) -> Result<Self, ConversionError> {
         IdCsr::try_from(CertReq::from_pem(pem)?)
     }
 
+    #[cfg_attr(feature = "wasm", wasm_bindgen)]
     /// Encode this type as PEM, returning a string.
     pub fn to_pem(self, line_ending: LineEnding) -> Result<String, ConversionError> {
         Ok(CertReq::try_from(self)?.to_pem(line_ending)?)
@@ -134,6 +143,7 @@ impl<S: Signature, P: PublicKey<S>> IdCsr<S, P> {
 ///     attributes    [0] Attributes{{ CRIAttributes }}
 /// }
 /// ```
+#[cfg_attr(feature = "wasm", wasm_bindgen)]
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct IdCsrInner<S: Signature, P: PublicKey<S>> {
     /// `PKCS#10` version. Default: 0 for `PKCS#10` v1
@@ -148,6 +158,7 @@ pub struct IdCsrInner<S: Signature, P: PublicKey<S>> {
 }
 
 impl<S: Signature, P: PublicKey<S>> IdCsrInner<S, P> {
+    #[cfg_attr(feature = "wasm", wasm_bindgen(constructor))]
     /// Creates a new [IdCsrInner].
     ///
     /// Fails, if [Name] or [Capabilities] do not meet polyproto validation criteria.
@@ -171,11 +182,13 @@ impl<S: Signature, P: PublicKey<S>> IdCsrInner<S, P> {
         })
     }
 
+    #[cfg_attr(feature = "wasm", wasm_bindgen)]
     /// Create an IdCsrInner from a byte slice containing a DER encoded PKCS #10 CSR.
     pub fn from_der(bytes: &[u8]) -> Result<Self, ConversionError> {
         IdCsrInner::try_from(CertReqInfo::from_der(bytes)?)
     }
 
+    #[cfg_attr(feature = "wasm", wasm_bindgen)]
     /// Encode this type as DER, returning a byte vector.
     pub fn to_der(self) -> Result<Vec<u8>, ConversionError> {
         Ok(CertReqInfo::try_from(self)?.to_der()?)

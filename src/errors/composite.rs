@@ -4,10 +4,13 @@
 
 use spki::ObjectIdentifier;
 use thiserror::Error;
+#[cfg(feature = "wasm")]
+use wasm_bindgen::prelude::*;
 
 use super::base::{ConstraintError, InvalidInput};
 
 #[derive(Error, Debug, PartialEq, Clone)]
+#[cfg_attr(feature = "wasm", wasm_bindgen)]
 pub enum InvalidCert {
     #[error("The signature does not match the contents of the certificate")]
     InvalidSignature,
@@ -22,6 +25,7 @@ pub enum InvalidCert {
 }
 
 #[derive(Error, Debug, PartialEq, Hash, Clone)]
+#[cfg_attr(feature = "wasm", wasm_bindgen)]
 pub enum PublicKeyError {
     #[error("The signature does not match the data")]
     BadSignature,
@@ -30,6 +34,7 @@ pub enum PublicKeyError {
 }
 
 #[derive(Error, Debug, PartialEq, Clone)]
+#[cfg_attr(feature = "wasm", wasm_bindgen)]
 pub enum ConversionError {
     #[error(transparent)]
     ConstraintError(#[from] ConstraintError),
